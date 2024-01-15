@@ -1,11 +1,13 @@
 "use client";
 require('dotenv').config();
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useRouter } from 'next/navigation'; // Import useRouter
+
 import './LoginForm.css'; // Import the CSS file for styling
 
 function Login() {
-    const history = useHistory();
+  
+    const router = useRouter(); // Initialize the router
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     
@@ -28,6 +30,9 @@ function Login() {
             // Authentication was successful
             const data = await response.json();
             console.log('Login successful');
+                // Authentication successful, now redirect
+                router.push('/restricted');
+              
             // You can store the token, perform redirects, or other actions here
           } else {
             // Authentication failed, handle error
