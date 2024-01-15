@@ -1,54 +1,41 @@
-"use client";
-require('dotenv').config();
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation'; // Import useRouter
+import { useRouter } from 'next/navigation'; // Corrected import
 
 import './LoginForm.css'; // Import the CSS file for styling
 
 function Login() {
-  
     const router = useRouter(); // Initialize the router
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    
+
     const handleLogin = async () => {
         try {
-          console.log('Attempting to log in...');
-          console.log('Username:', username);
-          console.log('Password:', password);
-          console.log('User service URL:', process.env.REACT_APP_USER_SERVICE_URL);
-      
-          const response = await fetch(`${process.env.REACT_APP_USER_SERVICE_URL}auth/login`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username, password }),
-          });
-      
+            console.log('Attempting to log in...');
 
-         
+            const response = await fetch(`${process.env.REACT_APP_USER_SERVICE_URL}auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
 
-          if (response.ok) {
-            // Authentication was successful
-            
-            //const data = await response.json();
-            console.log('Login successful');
-                // Authentication successful, now redirect
-                //router.push('/restricted');
-              
-            // You can store the token, perform redirects, or other actions here
-          } else {
-            // Authentication failed, handle error
-            console.error('Login failed');
-            // You can display error messages or perform other error handling
-          }
-      
-          // Rest of the code...
+            if (response.ok) {
+                const { token, refreshToken } = await response.json();
+                console.log('Login successful', token, refreshToken);
+
+                // Store the tokens as needed, then redirect
+                localStorage.setItem('token', token);
+                localStorage.setItem('refreshToken', refreshToken);
+                router.push('/restricted'); // Redirect to a protected page
+            } else {
+                console.error('Login failed');
+                // Handle error, maybe show an error message to the user
+            }
         } catch (error) {
-          console.error('Error logging in:', error);
+            console.error('Error logging in:', error);
         }
-      };
+    };
 
     return (
         <div className="login-form">
