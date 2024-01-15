@@ -11,8 +11,6 @@ function Login() {
 
     const handleLogin = async () => {
         try {
-            console.log('Attempting to log in...');
-
             const response = await fetch(`${process.env.REACT_APP_USER_SERVICE_URL}auth/login`, {
                 method: 'POST',
                 headers: {
@@ -23,13 +21,11 @@ function Login() {
 
             if (response.ok) {
                 const { token, refreshToken } = await response.json();
-                console.log('Login successful', token, refreshToken);
 
-                // Store the tokens as needed, then redirect
-                // localStorage.setItem('token', token);
-                // localStorage.setItem('refreshToken', refreshToken);
-                Cookies.set('token', token);
-                Cookies.set('refreshToken', refreshToken);
+                // Store the tokens in cookies
+                Cookies.set('token', token, { path: '/', httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+                Cookies.set('refreshToken', refreshToken, { path: '/', httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+                
                 router.push('/restricted'); // Redirect to a protected page
             } else {
                 console.error('Login failed');
