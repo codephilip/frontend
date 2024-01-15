@@ -25,6 +25,16 @@ function RegistrationForm() {
       console.log('Response:', response);
   
       // Rest of the code...
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Registration failed:', errorData);
+        // Display error message to the user
+    } else {
+        console.log('Registration successful');
+        // Registration successful, now redirect
+        //router.push('/restricted');
+        // You can store the token, perform redirects, or other actions here
+      }
     } catch (error) {
       console.error('Error registering user:', error);
     }

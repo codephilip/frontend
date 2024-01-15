@@ -26,12 +26,16 @@ function Login() {
             body: JSON.stringify({ username, password }),
           });
       
+
+         
+
           if (response.ok) {
             // Authentication was successful
-            const data = await response.json();
+            
+            //const data = await response.json();
             console.log('Login successful');
                 // Authentication successful, now redirect
-                router.push('/restricted');
+                //router.push('/restricted');
               
             // You can store the token, perform redirects, or other actions here
           } else {
