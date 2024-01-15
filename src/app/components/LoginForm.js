@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation'; // Corrected import
+import Cookies from 'js-cookie';
 
 import './LoginForm.css'; // Import the CSS file for styling
 
@@ -25,8 +26,10 @@ function Login() {
                 console.log('Login successful', token, refreshToken);
 
                 // Store the tokens as needed, then redirect
-                localStorage.setItem('token', token);
-                localStorage.setItem('refreshToken', refreshToken);
+                // localStorage.setItem('token', token);
+                // localStorage.setItem('refreshToken', refreshToken);
+                Cookies.set('token', token);
+                Cookies.set('refreshToken', refreshToken);
                 router.push('/restricted'); // Redirect to a protected page
             } else {
                 console.error('Login failed');
