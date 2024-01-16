@@ -1,26 +1,30 @@
 "use client";
+// pages/restricted.js
 
+import React, { useContext, useEffect } from 'react';
 import { useRouter } from "next/navigation";
-import Image from 'next/image';
-import { useEffect } from 'react';
+import { AuthContext } from '../utils/AuthContext';
+import Cookies from 'js-cookie';
 
-import Cookies from 'js-cookie'; // If using cookies to store the token
+console.log('Restricted page');
+const token = Cookies.get('token');
+console.log(token)
 
 
-export default function Home() {
+const RestrictedPage = () => {
+  const { isAuthenticated } = useContext(AuthContext);
+  const router = useRouter();
 
-        const router = useRouter();
-        
-        useEffect(() => {
-            const token = Cookies.get('token'); // Replace with your token retrieval logic
-            console.log(token)
-            if (!token) {
-            // No token found, redirect to login
-            router.push('/registration');
-            }
-        }, [router]);
-        
-        // Render your restricted content here
-        return <div>Restricted Content</div>;
-        };
-        
+  useEffect(() => {
+    if (!isAuthenticated) {
+      console.log('Not authenticated');
+      router.push('/registration');
+
+      console.log(isAuthenticated);
+    }
+  },[isAuthenticated, router]);
+
+  return isAuthenticated ? <div>Restricted Content</div> : null;
+};
+
+export default RestrictedPage;

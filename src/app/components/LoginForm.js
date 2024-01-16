@@ -25,7 +25,7 @@ function Login() {
                 // Store the tokens in cookies
                 Cookies.set('token', token, { path: '/', httpOnly: true, secure: process.env.NODE_ENV === 'production' });
                 Cookies.set('refreshToken', refreshToken, { path: '/', httpOnly: true, secure: process.env.NODE_ENV === 'production' });
-                
+                console.log(token); 
                 router.push('/restricted'); // Redirect to a protected page
             } else {
                 console.error('Login failed');
