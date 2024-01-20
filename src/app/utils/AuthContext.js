@@ -44,3 +44,13 @@ async function validateToken(token) {
     return false;
   }
 }
+// context/AuthContext.js
+
+
+// pages/_app.js
+
+
+// pages/_document.js
+
+
+// pages/index.js

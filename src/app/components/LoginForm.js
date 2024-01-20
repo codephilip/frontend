@@ -21,10 +21,13 @@ function Login() {
 
             if (response.ok) {
                 const { token, refreshToken } = await response.json();
+                const isSecure = window.location.protocol === 'https:';
 
+                Cookies.set('token', token, { path: '/', secure: isSecure });
+                Cookies.set('refreshToken', refreshToken, { path: '/', secure: isSecure });
                 // Store the tokens in cookies
-                Cookies.set('token', token, { path: '/', httpOnly: true, secure: process.env.NODE_ENV === 'production' });
-                Cookies.set('refreshToken', refreshToken, { path: '/', httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+                //Cookies.set('token', token, { path: '/', secure: process.env.NODE_ENV === 'production' });
+                //Cookies.set('refreshToken', refreshToken, { path: '/', secure: process.env.NODE_ENV === 'production' });
                 console.log(token); 
                 router.push('/restricted'); // Redirect to a protected page
             } else {
