@@ -6,7 +6,7 @@ import './RegistrationForm.css'; // Import the CSS file for styling
 function RegistrationForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  
+
   const handleRegister = async () => {
     try {
       console.log('Attempting to register user...');
@@ -21,18 +21,18 @@ function RegistrationForm() {
         },
         body: JSON.stringify({ username, password }),
       });
-  
+
       console.log('Response:', response);
-  
+
       // Rest of the code...
       if (!response.ok) {
         const errorData = await response.json();
         console.error('Registration failed:', errorData);
         // Display error message to the user
-    } else {
+      } else {
         console.log('Registration successful');
         // Registration successful, now redirect
-        //router.push('/restricted');
+        router.push('/restricted');
         // You can store the token, perform redirects, or other actions here
       }
     } catch (error) {
