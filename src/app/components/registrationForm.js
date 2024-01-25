@@ -40,6 +40,15 @@ function RegistrationForm() {
     }
   };
 
+  const handleGoogleRegister = async () => {
+    try {
+      console.log('Attempting to register user with Google...');
+      router.push(`${process.env.REACT_APP_USER_SERVICE_URL}auth/google`);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   return (
     <div className="registration-form">
       <h2>Register User</h2>
@@ -57,6 +66,7 @@ function RegistrationForm() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
+      <button className="register-button" onClick={handleGoogleRegister}>Google</button>
       <button className="register-button" onClick={handleRegister}>Register</button>
     </div>
   );
