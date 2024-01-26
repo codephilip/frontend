@@ -1,11 +1,25 @@
 "use client";
 require('dotenv').config();
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
 import './RegistrationForm.css'; // Import the CSS file for styling
 
 function RegistrationForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
+
+  const handleGoogleRegister = async () => {
+
+    try {
+      console.log(`${process.env.REACT_APP_USER_SERVICE_URL}auth/google/callback}`)
+      console.log('Attempting to register user with Google...');
+      router.push(`${process.env.REACT_APP_USER_SERVICE_URL}auth/google/callback`);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const handleRegister = async () => {
     try {
@@ -40,14 +54,6 @@ function RegistrationForm() {
     }
   };
 
-  const handleGoogleRegister = async () => {
-    try {
-      console.log('Attempting to register user with Google...');
-      router.push(`${process.env.REACT_APP_USER_SERVICE_URL}auth/google`);
-    } catch (e) {
-      console.log(e);
-    }
-  }
 
   return (
     <div className="registration-form">
